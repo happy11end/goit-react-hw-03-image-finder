@@ -1,6 +1,7 @@
 import { Component } from 'react'; // для класового компонента
 import { createPortal } from 'react-dom'; // для рендеринга в іншому місці
 import css from './Modal.module.css'; // стилізація
+import PropTypes from 'prop-types'; // типизація пропсів
 
 // Пошук модалки щоб динамічно додати до DOM-дерева сторінки
 const modalRoot = document.querySelector('#modal-root');
@@ -38,3 +39,9 @@ export class Modal extends Component {
     </div>, modalRoot)
   }
 }
+
+// типизація пропсів
+Modal.propTypes = {
+  closeModal: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+};

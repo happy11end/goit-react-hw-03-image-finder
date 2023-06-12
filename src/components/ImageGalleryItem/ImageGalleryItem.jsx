@@ -7,9 +7,14 @@ export const ImageGalleryItem = ({ images, togleModal }) => {
     <>
       {/* Перебираємо масив зображень і виводимо їх на сторінку. */}
       {images.map(item => (
-
         // При кліку на елемент галереї викликаємо функцію togleModal, яка відкриває модальне вікно.
-        <li key={item.id} onClick={(evt)=>{togleModal(item.largeImageURL, item.tags);}} className={css.galleryItem}>
+        <li
+          key={item.id}
+          onClick={evt => {
+            togleModal(item.largeImageURL, item.tags);
+          }}
+          className={css.galleryItem}
+        >
           <img
             loading="lazy"
             className={css.ImageGalleryItem}
@@ -24,5 +29,9 @@ export const ImageGalleryItem = ({ images, togleModal }) => {
 
 // типизація пропсів
 ImageGalleryItem.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.object).isRequired, // масив об'єктів
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+    })
+  ).isRequired,
 };

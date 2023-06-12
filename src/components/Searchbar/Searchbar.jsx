@@ -2,6 +2,7 @@ import { Component } from "react";
 import { toast } from "react-hot-toast"; // для показу повідомлень
 import { BiSearch } from 'react-icons/bi'; // іконка пошуку
 import css from './Searchbar.module.css' // стилізація
+import PropTypes from 'prop-types'; // типизація пропсів
 
 // Компонент пошуку
 export class Searchbar extends Component {
@@ -15,11 +16,6 @@ export class Searchbar extends Component {
         this.setState({ [name]: value }); // зміна стану по ключу name
   }
 
-  // функція для очищення поля вводу
-    resetForm = () => {
-     this.setState({ search: '' });
-    }
-
   render() {
     return (
       <header className={css.searchbar}>
@@ -30,13 +26,12 @@ export class Searchbar extends Component {
                     evt.preventDefault(); // відміна стандартної поведінки браузера
 
                     // перевірка на пустий запит
-                    if (!this.state.search) {
+                    if (!this.state.search.trim()) {
                       return toast.error('Enter text for search.'); // повідомлення про помилку
                     }
 
             // виклик функції з App.jsx для відправки запиту
-            this.props.handleSubmit(this.state.search);
-            this.resetForm();
+            this.props.handleSubmit(this.state.search.trim());
           }}
           className={css.Form}
         >
@@ -62,3 +57,8 @@ export class Searchbar extends Component {
     );
   }
 }
+
+// типизація пропсів
+Searchbar.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+};

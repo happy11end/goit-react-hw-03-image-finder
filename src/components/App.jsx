@@ -6,6 +6,7 @@ import { Searchbar } from './Searchbar/Searchbar'; // рядок пошуку
 import { Button } from 'components/Button/Button';
 import { Loader } from 'components/Loader/Loader'; // індикатор завантаження
 import { Modal } from './Modal/Modal';
+import { toast } from "react-hot-toast"; // для показу повідомлень
 
 export class App extends Component {
   state = {
@@ -75,18 +76,24 @@ export class App extends Component {
   };
 
   // Функція, яка викликається при натисканні на кнопку "Search".
-  handleSubmit = search => {
-    // Очищаємо масив з картинками, а також ставимо початкові значення для сторінки,
-    // загальної кількості картинок, флагів і помилок.
-    this.setState({
-      search,
-      images: [],
-      page: 1,
-      total: 1,
-      loading: false,
-      error: null,
-      empty: false,
-    });
+  handleSubmit = (search) => {
+    // Перевіряємо, чи новий пошуковий запит відрізняється від поточного.
+    if (search.trim() !== this.state.search.trim()) {
+      // Очищаємо масив з картинками, а також ставимо початкові значення для сторінки,
+      // загальної кількості картинок, флагів і помилок.
+      this.setState({
+        search,
+        images: [],
+        page: 1,
+        total: 1,
+        loading: false,
+        error: null,
+        empty: false,
+      });
+    }
+    else {
+      toast.error('Same query is already displayed.');
+    }
   };
 
   // Функція, яка викликається при натисканні на кнопку "Close".
